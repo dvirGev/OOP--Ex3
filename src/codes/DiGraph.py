@@ -7,7 +7,6 @@ class DiGraph(GraphInterface):
         self.nodes = {}
         self.edges = {}
         self.mc = 0
-    
     def v_size(self) -> int:
         return len(self.nodes)
 

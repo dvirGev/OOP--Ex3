@@ -1,5 +1,5 @@
 from codes.DiGraph import DiGraph
-#from GraphAlgo import GraphAlgo
+from codes.GraphAlgo import GraphAlgo
 
 
 def check():
@@ -30,7 +30,7 @@ def check0():
     """
     g = DiGraph()  # creates an empty directed graph
     for n in range(4):
-        g.add_node(n)
+        g.add_node(n,(n,n,n))
     g.add_edge(0, 1, 1)
     g.add_edge(1, 0, 1.1)
     g.add_edge(1, 2, 1.3)
@@ -42,9 +42,10 @@ def check0():
     print(g.get_all_v())  # prints a dict with all the graph's vertices.
     print(g.all_in_edges_of_node(1))
     print(g.all_out_edges_of_node(1))
-    g_algo = GraphAlgo(g)
-    print(g_algo.shortest_path(0, 3))
-    g_algo.plot_graph()
+    # g_algo = GraphAlgo(g)
+    # print(g_algo.shortest_path(0, 3))
+    # g_algo.plot_graph()
+    
 
 
 def check1():
@@ -53,13 +54,13 @@ def check1():
     :return:
     """
     g_algo = GraphAlgo()  # init an empty graph - for the GraphAlgo
-    file = "../data/T0.json"
+    file = "data/T0.json"
     g_algo.load_from_json(file)  # init a GraphAlgo from a json file
     print(g_algo.shortest_path(0, 3))
     print(g_algo.shortest_path(3, 1))
-    print(g_algo.centerPoint())
-    g_algo.save_to_json(file + '_saved')
-    g_algo.plot_graph()
+    #print(g_algo.centerPoint())
+    #g_algo.save_to_json(file + '_saved')
+    #g_algo.plot_graph()
 
 
 def check2():
@@ -105,5 +106,16 @@ def check3():
 
 
 if __name__ == '__main__':
-    check()
-    check0()
+    # #check()
+    # check1()
+    graph = DiGraph()
+    graph.add_node(0)
+    graph.add_node(1)
+    graph.add_node(2)
+    graph.add_edge(0,1,1)
+    graph.add_edge(1,2,4)
+    g_algo = GraphAlgo(graph)
+    print(g_algo.shortest_path(0,1))
+    #(1, [0, 1])
+    print(g_algo.shortest_path(0,2))
+    #(5, [0, 1, 2])

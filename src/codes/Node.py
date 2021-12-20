@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, key: int, location: tuple) -> None:
+    def __init__(self, key: int, location = ()) -> None:
         self.key = key
         self.location = location
         self.tag = 0
