@@ -1,5 +1,5 @@
-from DiGraph import DiGraph
-from GraphAlgo import GraphAlgo
+from codes.DiGraph import DiGraph
+#from GraphAlgo import GraphAlgo
 
 
 def check():
@@ -19,8 +19,8 @@ def check():
     ([1,3,4,2],3.5)
     """
     check0()
-    check1()
-    check2()
+    # check1()
+    # check2()
 
 
 def check0():
@@ -106,3 +106,4 @@ def check3():
 
 if __name__ == '__main__':
     check()
+    check0()
