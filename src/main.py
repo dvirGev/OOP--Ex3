@@ -109,5 +109,5 @@ if __name__ == '__main__':
     # #check()
     # check1()
     graphAlgo = GraphAlgo()
-    graphAlgo.load_from_json("./data/A2.json")
+    graphAlgo.load_from_json("./data/A4.json")
     graphAlgo.plot_graph()

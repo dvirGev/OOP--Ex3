@@ -88,13 +88,12 @@ class GUI():
 
             # pygame.draw.line(self.screen, (0, 0, 0),(srcX, srcY), (destX, destY), 3)
             self.arrow((srcX, srcY), (destX, destY), 25, 10)
-            w  = f"{allEdges[edge]:.2f}"
+            w = f"{allEdges[edge]:.2f}"
             text_surface = self.GAME_FONT.render(w, 5, (255, 255, 255))
-            self.screen.blit(text_surface, ((srcX*0.25 + destX*0.75),(srcY*0.25 + destY*0.75)))
+            self.screen.blit(
+                text_surface, ((srcX*0.25 + destX*0.75), (srcY*0.25 + destY*0.75)))
 
     def arrow(self, start, end, d, h):
-        print(start)
-        print(end)
         dx = float(end[0] - start[0])
         dy = float(end[1] - start[1])
         D = float(Math.sqrt(dx * dx + dy * dy))
@@ -110,10 +109,11 @@ class GUI():
         x = xn * cos - yn * sin + start[0]
         yn = xn * sin + yn * cos + start[1]
         xn = x
-        points = [(end[0], end[1]),  (int(xm),  int(ym)),  (int(xn),int(yn))]
-        
-        pygame.draw.line(self.screen,(0,0,0), start, end)
-        pygame.draw.polygon(self.screen, (0,0,0), points)
+        points = [(end[0], end[1]),  (int(xm),  int(ym)),  (int(xn), int(yn))]
+
+        pygame.draw.line(self.screen, (0, 0, 0), start, end)
+        pygame.draw.polygon(self.screen, (0, 0, 0), points)
+
 
 if __name__ == '__main__':
     graphAlgo = GraphAlgo()

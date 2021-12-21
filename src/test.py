@@ -43,8 +43,8 @@ class TestGraphAlgo(unittest.TestCase):
         graphAlgo.load_from_json("./data/A3.json")
         self.assertEqual(graphAlgo.centerPoint(), (2, 8.182236568942237))
         
-        # graphAlgo.load_from_json("./data/A4.json")
-        # self.assertEqual(graphAlgo.centerPoint(), (6, 8.071366078651435))
+        graphAlgo.load_from_json("./data/A4.json")
+        self.assertEqual(graphAlgo.centerPoint(), (6, 8.071366078651435))
         
         graphAlgo.load_from_json("./data/A5.json")
         self.assertEqual(graphAlgo.centerPoint(), (40, 9.291743173960954))
