@@ -22,7 +22,7 @@ class GUI():
         self.nodeColor = (227, 77, 148)
         self.GAME_FONT = pygame.font.SysFont('comicsans', 15)
         self.screen = pygame.display.set_mode(
-            [1000, 750], RESIZABLE)  # Set up the drawing window
+            [750, 500], RESIZABLE)  # Set up the drawing window
         self.run()
 
     def run(self):
