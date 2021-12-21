@@ -1,5 +1,5 @@
-from codes.DiGraph import DiGraph
-from codes.GraphAlgo import GraphAlgo
+from DiGraph import DiGraph
+from GraphAlgo import GraphAlgo
 
 
 def check():
@@ -109,5 +109,5 @@ if __name__ == '__main__':
     # #check()
     # check1()
     graphAlgo = GraphAlgo()
-    graphAlgo.load_from_json("data\T0.json")
-    graphAlgo.save_to_json("dvir.json")
+    graphAlgo.load_from_json("./data/A4.json")
+    graphAlgo.plot_graph()
