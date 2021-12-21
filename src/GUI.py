@@ -1,4 +1,5 @@
 import pygame
+import math as Math
 from pygame import math
 from pygame.constants import RESIZABLE
 from DiGraph import DiGraph
@@ -52,11 +53,11 @@ class GUI():
             x = (node.location[0] - self.minX) * self.unitX + 25
             y = (node.location[1] - self.minY) * self.unitY + 25
 
-            pygame.draw.circle(self.screen, self.nodeColor, (x, y), 20)
+            pygame.draw.circle(self.screen, self.nodeColor, (x, y), 15)
             # You can use `render` and then blit the text surface ...
             text_surface = self.GAME_FONT.render(
-                str(node.key), 15, (255, 255, 255))
-            self.screen.blit(text_surface, (x, y-10))
+                str(node.key), 10, (255, 255, 255))
+            self.screen.blit(text_surface, (x-5, y-10))
 
     def findMaxAndMin(self):
         for node in self.graphAlgo.graph.nodes.values():
@@ -86,15 +87,35 @@ class GUI():
             destY = (destY - self.minY) * self.unitY + 25
 
             # pygame.draw.line(self.screen, (0, 0, 0),(srcX, srcY), (destX, destY), 3)
-            self.arrow(self.screen, (0,0,0), (srcX, srcY), (destX, destY), 3)
+            self.arrow((srcX, srcY), (destX, destY), 25, 10)
+            w  = f"{allEdges[edge]:.2f}"
+            text_surface = self.GAME_FONT.render(w, 5, (255, 255, 255))
+            self.screen.blit(text_surface, ((srcX*0.25 + destX*0.75),(srcY*0.25 + destY*0.75)))
 
-    def arrow(screen, lcolor, tricolor, start, end, trirad, thickness=2):
-        pygame.draw.line(screen, lcolor, start, end, thickness)
-        rotation = (math.atan2(start[1] - end[1], end[0] - start[0])) + math.pi/2
-        pygame.draw.polygon(screen, tricolor, ((end[0] + trirad * math.sin(rotation), end[1] + trirad * math.cos(rotation)), (end[0] + trirad * math.sin(rotation - 120*rad),end[1] + trirad * math.cos(rotation - 120*rad)), (end[0] + trirad * math.sin(rotation + 120*rad),end[1] + trirad * math.cos(rotation + 120*rad))))
-
+    def arrow(self, start, end, d, h):
+        print(start)
+        print(end)
+        dx = float(end[0] - start[0])
+        dy = float(end[1] - start[1])
+        D = float(Math.sqrt(dx * dx + dy * dy))
+        xm = float(D - d)
+        xn = float(xm)
+        ym = float(h)
+        yn = -h
+        sin = dy / D
+        cos = dx / D
+        x = xm * cos - ym * sin + start[0]
+        ym = xm * sin + ym * cos + start[1]
+        xm = x
+        x = xn * cos - yn * sin + start[0]
+        yn = xn * sin + yn * cos + start[1]
+        xn = x
+        points = [(end[0], end[1]),  (int(xm),  int(ym)),  (int(xn),int(yn))]
+        
+        pygame.draw.line(self.screen,(0,0,0), start, end)
+        pygame.draw.polygon(self.screen, (0,0,0), points)
 
 if __name__ == '__main__':
     graphAlgo = GraphAlgo()
-    graphAlgo.load_from_json("./data/A0.json")
+    graphAlgo.load_from_json("./data/G1.json")
     gui = GUI(graphAlgo)
