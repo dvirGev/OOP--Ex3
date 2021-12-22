@@ -1,4 +1,5 @@
 import pygame
+import pygame_menu
 import random
 import math as Math
 from pygame import math
@@ -24,12 +25,15 @@ class GUI():
         self.GAME_FONT = pygame.font.SysFont('comicsans', 15)
         self.screen = pygame.display.set_mode(
             [750, 500], RESIZABLE)  # Set up the drawing window
+        
+        
         self.run()
 
     def run(self):
         # Run until the user asks to quit
         running = True
         while running:
+            self.menu.mainloop(self.screen)
             self.unitX = (self.screen.get_width() /
                           abs(self.maxX - self.minX) * 0.95)
             self.unitY = (self.screen.get_height() /
@@ -116,6 +120,14 @@ class GUI():
 
         pygame.draw.line(self.screen, (0, 0, 0), start, end)
         pygame.draw.polygon(self.screen, (0, 0, 0), points)
+        
+    def buildMenuGraph():
+        self.menu = pygame_menu.Menu('Graph Options', 400, 300, theme=pygame_menu.themes.THEME_BLUE)
+
+        self.menu.add.text_input('Name :', default='John Doe')
+        #menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)], onchange=set_difficulty)
+        self.menu.add.button('Play', print("hello"))
+        self.menu.add.button('Quit', pygame_menu.events.EXIT) 
 
 
 if __name__ == '__main__':
