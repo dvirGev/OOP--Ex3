@@ -1,4 +1,5 @@
 import pygame
+import random
 import math as Math
 from pygame import math
 from pygame.constants import RESIZABLE
@@ -61,9 +62,11 @@ class GUI():
 
     def findMaxAndMin(self):
         for node in self.graphAlgo.graph.nodes.values():
+            if(node.location == None):
+                node.location = (random.uniform(0, 100), random.uniform(0, 100))
             x = node.location[0]
             y = node.location[1]
-
+            
             if(self.minX > x):
                 self.minX = x
             elif(self.maxX < x):
