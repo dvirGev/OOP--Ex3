@@ -5,6 +5,9 @@ from GraphAlgo import GraphAlgo
 
 
 class TestGraphAlgo(unittest.TestCase):
+    """ this class is for checking are functions
+    the name of the function we check is just the name of the function with 'test_' before
+    """
     def test_load_from_json(self):
         graphAlgo = GraphAlgo()
         self.assertFalse(graphAlgo.load_from_json("somthing.json"))
