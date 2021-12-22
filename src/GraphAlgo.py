@@ -96,7 +96,7 @@ class GraphAlgo(GraphAlgoInterface):
         l = self.dijkstra.path[id2]
         return (w, l)
 
-    def checkGreedy(self, i: int, c: list, ins: list):
+    def check_greedy(self, i: int, c: list, ins: list):
         first = i
         ins.append(i)
         c.remove(i)
@@ -135,7 +135,7 @@ class GraphAlgo(GraphAlgoInterface):
         for node in node_lst:
             self.updateDijkstra(node)
             cur = []
-            value = self.checkGreedy(node, copy.deepcopy(node_lst), cur)
+            value = self.check_greedy(node, copy.deepcopy(node_lst), cur)
             if value < best:
                 best = value
                 permute = cur
