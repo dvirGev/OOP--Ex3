@@ -147,7 +147,7 @@ class GUI():
         menu.add.text_input('Src: ')
         menu.add.text_input('Dest: ')
         menu.add.text_input('Weight: ')
-        menu.add.button(f'Enter', graph.add_edge())
+        menu.add.button(f'Enter', print)
         menu.add.button('Close', menu.disable)
         menu.mainloop(self.screen) 
         return menu
