@@ -9,6 +9,7 @@ from DiGraph import DiGraph
 
 
 class GraphAlgo(GraphAlgoInterface):
+    """This class represents AlgoGraph."""
     def __init__(self, graph=DiGraph()) -> None:
         super().__init__()
         self.graph = graph
@@ -21,9 +22,17 @@ class GraphAlgo(GraphAlgoInterface):
             self.dijkstra.alg()
 
     def get_graph(self) -> GraphInterface:
+        """
+        :return: the directed graph on which the algorithm works on.
+        """
         return self.graph
 
     def load_from_json(self, file_name: str) -> bool:
+        """
+        Loads a graph from a json file.
+        @param file_name: The path to the json file
+        @returns True if the loading was successful, False o.w.
+        """
         try:
             self.graph = DiGraph()
             with open(file_name, "r") as fp:
@@ -44,6 +53,11 @@ class GraphAlgo(GraphAlgoInterface):
         return True
 
     def save_to_json(self, file_name: str) -> bool:
+        """
+        Saves the graph in JSON format to a file
+        @param file_name: The path to the out file
+        @return: True if the save was successful, False o.w.
+        """
         dict = {"Nodes": [], "Edges": []}
         for node in self.graph.nodes.values():
             id = node.key
@@ -65,6 +79,14 @@ class GraphAlgo(GraphAlgoInterface):
         return True
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
+        """
+        Returns the shortest path from node id1 to node id2 using Dijkstra's Algorithm
+        @param id1: The start node id
+        @param id2: The end node id
+        @return: The distance of the path, a list of the nodes ids that the path goes through
+        Notes:
+        If there is no path between id1 and id2, or one of them dose not exist the function returns (float('inf'),[])
+        """
         self.updateDijkstra(id1)
         self.dijkstra.buildPath(id2)
         w = self.dijkstra.dist[id2]
@@ -79,6 +101,10 @@ class GraphAlgo(GraphAlgoInterface):
     #     """
 
     def centerPoint(self) -> (int, float):
+        """
+        Finds the node that has the shortest distance to it's farthest node.
+        :return: The nodes id, min-maximum distance
+        """
         ans = (0, float('inf'))
         for src in self.graph.nodes.keys():
             self.updateDijkstra(src)
@@ -88,11 +114,20 @@ class GraphAlgo(GraphAlgoInterface):
         return ans
 
     def plot_graph(self) -> None:
+        """
+        Plots the graph.
+        If the nodes have a position, the nodes will be placed there.
+        Otherwise, they will be placed in a random but elegant manner.
+        @return: None
+        """
         GUI(self)
 
 
 class Dijkstra:
     def __init__(self, graph: GraphInterface) -> None:
+        """
+        this class crate the Dijkstra algorithm.
+        """
         self.src = -1
         self.MC = -1
         self.dist = {}
@@ -101,6 +136,11 @@ class Dijkstra:
         self.graph = graph
 
     def initMaps(self, dads: dict, Q: list) -> None:
+        """
+        initMaps of the algorithm if there are edge between two verticals put in the dist the wight between them else
+        infinity.
+        and initiate all the dads.
+        """
         for node in self.graph.nodes.keys():
             if node != self.src:
                 self.dist[node] = float('inf')
@@ -113,6 +153,10 @@ class Dijkstra:
         Q.append(self.src)
 
     def minInList(self, Q: list) -> int:
+        """
+        check what is the next vertical we check.
+        return: node.
+        """
         min2 = float('inf')
         ans = float('-inf')
         for node in Q:
@@ -124,6 +168,10 @@ class Dijkstra:
         return ans
 
     def relax(self, src: int, dest: int) -> None:
+        """
+        the kernel of the algorithm check if we can relax the wight between the verticals
+        return: None
+        """
         newDist = self.dist[src] + self.graph.edges[(src, dest)]
         if newDist < self.dist[dest]:
             self.dist[dest] = newDist
@@ -140,6 +188,10 @@ class Dijkstra:
                 self.relax(u, dest)
 
     def buildPath(self, dest: int) -> None:
+        """
+        build the path between the verticals
+        return: None
+        """
         if len(self.path[dest]) != 0:
             return
         self.path[dest] = []
