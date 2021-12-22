@@ -22,30 +22,38 @@ class GUI():
 
         self.backgroundColor = (34, 189, 173)
         self.nodeColor = (227, 77, 148)
+        self.buttonColor = (132, 176, 242)
         self.GAME_FONT = pygame.font.SysFont('comicsans', 15)
         self.screen = pygame.display.set_mode(
             [750, 500], RESIZABLE)  # Set up the drawing window
-        
+
         
         self.run()
 
     def run(self):
+        graphBotton = Button(self.buttonColor, 2, 2, 70, 20, 'Graph Optins')
+        
         # Run until the user asks to quit
         running = True
         while running:
-            self.menu.mainloop(self.screen)
+            #
             self.unitX = (self.screen.get_width() /
-                          abs(self.maxX - self.minX) * 0.95)
+                          abs(self.maxX - self.minX) * 0.85)
             self.unitY = (self.screen.get_height() /
-                          abs(self.maxY - self.minY) * 0.9)
+                          abs(self.maxY - self.minY) * 0.8)
             # Fill the background with white
             self.screen.fill(self.backgroundColor)
             # Did the user click the window close button
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if graphBotton.isOver(pygame.mouse.get_pos()):
+                        graphMenu = self.buildMenuGraph()
+                        graphMenu.mainloop(self.screen)
 
             # Draw a solid blue circle in the center
+            graphBotton.draw(self.screen, (0,0,0))
             self.drawEdges()
             self.drawNodes()
             # Flip the display
@@ -66,8 +74,8 @@ class GUI():
 
     def findMaxAndMin(self):
         for node in self.graphAlgo.graph.nodes.values():
-            if(node.location == None):
-                node.location = (random.uniform(0, 100), random.uniform(0, 100))
+            if(node.location == None or node.location == ()):
+                node.location = (random.uniform(0, 0.85), random.uniform(0, 0.8))
             x = node.location[0]
             y = node.location[1]
             
@@ -95,7 +103,11 @@ class GUI():
 
             # pygame.draw.line(self.screen, (0, 0, 0),(srcX, srcY), (destX, destY), 3)
             self.arrow((srcX, srcY), (destX, destY), 25, 10)
-            w = f"{allEdges[edge]:.2f}"
+            w = str(allEdges[edge])
+            try:
+                w = f"{allEdges[edge]:.2f}"
+            except:
+                pass
             text_surface = self.GAME_FONT.render(w, 5, (255, 255, 255))
             self.screen.blit(
                 text_surface, ((srcX*0.25 + destX*0.75), (srcY*0.25 + destY*0.75)))
@@ -121,14 +133,54 @@ class GUI():
         pygame.draw.line(self.screen, (0, 0, 0), start, end)
         pygame.draw.polygon(self.screen, (0, 0, 0), points)
         
-    def buildMenuGraph():
-        self.menu = pygame_menu.Menu('Graph Options', 400, 300, theme=pygame_menu.themes.THEME_BLUE)
+    def buildMenuGraph(self):
+        graph = self.graphAlgo.graph
+        menu = pygame_menu.Menu('Graph Options', 400, 300, theme=pygame_menu.themes.THEME_BLUE)
+        menu.add.button(f'Node Size is {graph.v_size()}', None)
+        menu.add.button(f'Node Edge is {graph.e_size()}', None)
+        menu.add.button('Add Edge', self.addEdge)
+        menu.add.button('Close', menu.disable) 
+        return menu
+    def addEdge(self):
+        graph = self.graphAlgo.graph
+        menu = pygame_menu.Menu('Add Edge', 400, 300, theme=pygame_menu.themes.THEME_BLUE)
+        menu.add.text_input('Src: ')
+        menu.add.text_input('Dest: ')
+        menu.add.text_input('Weight: ')
+        menu.add.button(f'Enter', graph.add_edge())
+        menu.add.button('Close', menu.disable)
+        menu.mainloop(self.screen) 
+        return menu
 
-        self.menu.add.text_input('Name :', default='John Doe')
-        #menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)], onchange=set_difficulty)
-        self.menu.add.button('Play', print("hello"))
-        self.menu.add.button('Quit', pygame_menu.events.EXIT) 
 
+class Button():
+    def __init__(self, color, x,y,width,height, text=''):
+        self.color = color
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.text = text
+
+    def draw(self,win,outline=None):
+        #Call this method to draw the button on the screen
+        if outline:
+            pygame.draw.rect(win, outline, (self.x-2,self.y-2,self.width+4,self.height+4),0)
+            
+        pygame.draw.rect(win, self.color, (self.x,self.y,self.width,self.height),0)
+        
+        if self.text != '':
+            font = pygame.font.SysFont('comicsans', 10)
+            text = font.render(self.text, 1, (0,0,0))
+            win.blit(text, (self.x + (self.width/2 - text.get_width()/2), self.y + (self.height/2 - text.get_height()/2)))
+
+    def isOver(self, pos):
+        #Pos is the mouse position or a tuple of (x,y) coordinates
+        if pos[0] > self.x and pos[0] < self.x + self.width:
+            if pos[1] > self.y and pos[1] < self.y + self.height:
+                return True
+            
+        return False
 
 if __name__ == '__main__':
     graphAlgo = GraphAlgo()
