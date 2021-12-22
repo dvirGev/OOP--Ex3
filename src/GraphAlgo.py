@@ -1,5 +1,7 @@
 # from _typeshed import Self
 # from os import stat_result
+import copy
+
 from GUI import GUI
 from GraphAlgoInterface import GraphAlgoInterface
 from GraphInterface import GraphInterface
@@ -10,6 +12,7 @@ from DiGraph import DiGraph
 
 class GraphAlgo(GraphAlgoInterface):
     """This class represents AlgoGraph."""
+
     def __init__(self, graph=DiGraph()) -> None:
         super().__init__()
         self.graph = graph
@@ -61,7 +64,7 @@ class GraphAlgo(GraphAlgoInterface):
         dict = {"Nodes": [], "Edges": []}
         for node in self.graph.nodes.values():
             id = node.key
-            if(node.location != None):
+            if (node.location != None):
                 pos = f'{node.location[0]},{node.location[1]},{node.location[2]}'
                 dict["Nodes"].append({"id": id, "pos": pos})
             else:
@@ -93,12 +96,51 @@ class GraphAlgo(GraphAlgoInterface):
         l = self.dijkstra.path[id2]
         return (w, l)
 
-    # def TSP(self, node_lst: List[int]) -> (List[int], float):
-    #     """
-    #     Finds the shortest path that visits all the nodes in the list
-    #     :param node_lst: A list of nodes id's
-    #     :return: A list of the nodes id's in the path, and the overall distance
-    #     """
+    def checkGreedy(self, i: int, c: list, ins: list):
+        first = i
+        ins.append(i)
+        c.remove(i)
+        index = None
+        sum = 0
+        while len(c):
+            low = float('inf')
+            for j in c:
+                if self.dijkstra.dist[j]< low:
+                    low = self.dijkstra.dist[j]
+                    index = j
+
+            sum += low
+            f = True
+            path = self.shortest_path(i,index)[1]
+            for j in path:
+                if f:
+                    f = False
+                    continue
+                else:
+                    ins.append(j)
+            i = index
+            self.updateDijkstra(i)
+            c.remove(index)
+        return sum
+
+
+    def TSP(self, node_lst: list[int]) -> (list[int], float):
+        """
+        Finds the shortest path that visits all the nodes in the list
+        :param node_lst: A list of nodes id's
+        :return: A list of the nodes id's in the path, and the overall distance
+        """
+        best = float('inf')
+        permute = []
+        for node in node_lst:
+            self.updateDijkstra(node)
+            cur = []
+            value = self.checkGreedy(node, copy.deepcopy(node_lst), cur)
+            if value < best:
+                best = value
+                permute = cur
+
+        return (permute,best)
 
     def centerPoint(self) -> (int, float):
         """
