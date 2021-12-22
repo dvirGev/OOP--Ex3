@@ -96,7 +96,7 @@ class GraphAlgo(GraphAlgoInterface):
         l = self.dijkstra.path[id2]
         return (w, l)
 
-    def check_greedy(self, i: int, c: list, ins: list):
+    def check_greedy1(self, i: int, c: list, ins: list):
         first = i
         ins.append(i)
         c.remove(i)
