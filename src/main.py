@@ -109,5 +109,11 @@ if __name__ == '__main__':
     # #check()
     # check1()
     graphAlgo = GraphAlgo()
+<<<<<<< HEAD
     graphAlgo.load_from_json("./data/A0.json")
+=======
+    graphAlgo.load_from_json("C://Users//dvir1//PycharmProjects//OOP--Ex3//data//G3.json")
+    path = [0,1,2,3,4,5,6,7,27]
+    print(graphAlgo.TSP(path))
+>>>>>>> 2eae1f89a877298493dc124befb55b21ec1472cf
     graphAlgo.plot_graph()
