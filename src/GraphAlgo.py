@@ -130,17 +130,22 @@ class GraphAlgo(GraphAlgoInterface):
         :param node_lst: A list of nodes id's
         :return: A list of the nodes id's in the path, and the overall distance
         """
-        best = float('inf')
-        permute = []
-        for node in node_lst:
-            self.updateDijkstra(node)
-            cur = []
-            value = self.check_greedy(node, copy.deepcopy(node_lst), cur)
-            if value < best:
-                best = value
-                permute = cur
+        try:
+            best = float('inf')
+            permute = []
+            for node in node_lst:
+                self.updateDijkstra(node)
+                cur = []
+                value = self.check_greedy(node, copy.deepcopy(node_lst), cur)
+                if value < best:
+                    best = value
+                    permute = cur
+            return (permute,best)
+        except:
+            return ([], float('inf'))
+                    
 
-        return (permute,best)
+        
 
     def centerPoint(self) -> (int, float):
         """

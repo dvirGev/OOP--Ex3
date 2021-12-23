@@ -112,11 +112,11 @@ class TestDiGraph(unittest.TestCase):
         self.assertEqual(True, graphAlgo.graph.remove_edge(0,1))
         self.assertEqual(False, graphAlgo.graph.remove_edge(0, 1))
 
-    def test_remove_edge(self):
+    def test_TSP(self):
         graphAlgo = GraphAlgo()
-        graphAlgo.load_from_json("./data/A1.json")
-        path = [0, 1, 2, 3, 4, 5, 6, 7, 27]
-        expected = ([27, 29, 14, 13, 4, 3, 2, 1, 0, 8, 7, 6, 5], 13.64451442247153)
+        graphAlgo.load_from_json("./data/A3.json")
+        path = [7, 8, 35, 33, 32, 5]
+        expected = ([8, 7, 6, 5, 6, 2, 32, 33, 34, 35], 12.821754662005032)
         self.assertEqual(expected, graphAlgo.TSP(path))
 
 if __name__ == '__main__':

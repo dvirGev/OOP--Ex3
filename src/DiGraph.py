@@ -10,6 +10,8 @@ class DiGraph(GraphInterface):
         self.nodes = {}
         self.edges = {}
         self.mc = 0
+    def __repr__(self) -> str:
+        return f'Node: {self.nodes}, Edges {self.edges}'
 
     def v_size(self) -> int:
         """
