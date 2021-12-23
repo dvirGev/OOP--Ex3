@@ -88,7 +88,7 @@ Here you fill the path for your json file.
 ![img_8.png](img_8.png)
 example of Graph Json file you can find in the [data folder](https://github.com/dvirGev/OOP--Ex3/tree/main/data)  <br />
    
-if you want to watch the defferance between the run times of the algorithms in java and python open the link below. 
+if you want to watch the defferance between the run times of the algorithms in java and python open the link. 
 https://github.com/dvirGev/OOP--Ex3/wiki/comper-between-python-and-java
 
 
