@@ -41,7 +41,7 @@ class GraphAlgo(GraphAlgoInterface):
             with open(file_name, "r") as fp:
                 di = json.load(fp)
                 for node in di["Nodes"]:
-                    id = node["id"]
+                    id = int(node["id"])
                     if "pos" in node:
                         posData = node["pos"].split(',')
                         self.graph.add_node(
@@ -49,7 +49,7 @@ class GraphAlgo(GraphAlgoInterface):
                     else:
                         self.graph.add_node(id)
                 for edge in di["Edges"]:
-                    self.graph.add_edge(edge["src"], edge["dest"], edge["w"])
+                    self.graph.add_edge(int(edge["src"]), int(edge["dest"]), float(edge["w"]))
         except:
             return False
         self.dijkstra.graph = self.graph
