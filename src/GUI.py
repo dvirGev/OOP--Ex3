@@ -4,6 +4,8 @@ import random
 import math as Math
 from pygame import math
 from pygame.constants import RESIZABLE
+from pygame_menu.events import MenuAction
+from pygame_menu.locals import INPUT_FLOAT, INPUT_INT
 from DiGraph import DiGraph
 #from GraphAlgo import GraphAlgo
 from GraphAlgoInterface import GraphAlgoInterface
@@ -144,15 +146,17 @@ class GUI():
     def addEdge(self):
         graph = self.graphAlgo.graph
         menu = pygame_menu.Menu('Add Edge', 400, 300, theme=pygame_menu.themes.THEME_BLUE)
-        menu.add.text_input('Src: ')
-        menu.add.text_input('Dest: ')
-        menu.add.text_input('Weight: ')
-        menu.add.button(f'Enter', print)
+        src = menu.add.text_input('Src: ', input_type= INPUT_INT)
+        dest = menu.add.text_input('Dest: ', input_type= INPUT_INT)
+        weight = menu.add.text_input('Weight: ', input_type= INPUT_FLOAT)
+        menu.add.button(f'Enter', self.doAddEdge, src, dest, weight, menu)
         menu.add.button('Close', menu.disable)
         menu.mainloop(self.screen) 
         return menu
-
-
+    def doAddEdge(self, src, dest , weight, menu):
+        print(f"src {src.get_value()}, dest {dest.get_value()}, w {weight.get_value()}")
+        print(self.graphAlgo.graph.add_edge(src.get_value(), dest.get_value(), weight.get_value()))
+        menu.disable()
 class Button():
     def __init__(self, color, x,y,width,height, text=''):
         self.color = color
