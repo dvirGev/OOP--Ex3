@@ -73,7 +73,8 @@ we're doing Dijkstra on each node and save the max distance from it. then we che
 ![img_2.png](img_2.png)
 
 ## Algorithms Results<br />
-![this is an image](https://i.ibb.co/yftKZ9d/result.png) <br />
+ if you want to watch the defferance between the run times of the algorithms in java and python open the link. 
+https://github.com/dvirGev/OOP--Ex3/wiki/comper-between-python-and-java<br />
 ## how to run the program <br />
 
 1. Download The project from the here. <br />
@@ -88,8 +89,7 @@ Here you fill the path for your json file.
 ![img_8.png](img_8.png)
 example of Graph Json file you can find in the [data folder](https://github.com/dvirGev/OOP--Ex3/tree/main/data)  <br />
    
-if you want to watch the defferance between the run times of the algorithms in java and python open the link. 
-https://github.com/dvirGev/OOP--Ex3/wiki/comper-between-python-and-java
+
 
 
 
